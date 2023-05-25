@@ -8,8 +8,6 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(cors());
-app.use(morgan('dev'));
 
 const output = [];
 const city_dpt = new Map();
@@ -30,6 +28,9 @@ fs.createReadStream('./data/DATOSFINAL.csv')
       );
     });
   });
+
+app.use(cors());
+app.use(morgan('dev'));
 
 app.get('/city/:city', (req, res) => {
   switch (req.params.city) {
