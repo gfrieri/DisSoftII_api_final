@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import fs from 'fs';
+import filehandle from 'file-system';
 import csv from 'csv-parser';
 
 const app = express();
@@ -13,8 +13,8 @@ app.use(morgan('dev'));
 
 const output = [];
 const city_dpt = new Map();
-
-fs.createReadStream('./data/DATOSFINAL.csv')
+filehandle
+  .createReadStream('./data/DATOSFINAL.csv')
   .pipe(csv())
   .on('data', (data) => {
     output.push(data);
