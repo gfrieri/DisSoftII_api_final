@@ -34,7 +34,7 @@ fs.createReadStream('./data/DATOSFINAL.csv')
 app.get('/city/:city', (req, res) => {
   switch (req.params.city) {
     case 'bogota':
-      res.json({ city: 'bogota', dpt: 'bogota' });
+      res.json({ city: 'bogota', dpt: 'cundinamarca' });
       break;
     case 'medellin':
       res.json({ city: 'medellin', dpt: 'antioquia' });
