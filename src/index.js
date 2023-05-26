@@ -6,8 +6,6 @@ import csv from 'csv-parser';
 
 const app = express();
 const port = process.env.PORT || 3000;
-app.use(cors());
-app.use(morgan('dev'));
 
 const output = [];
 const city_dpt = new Map();
@@ -23,6 +21,9 @@ fs.createReadStream('./src/data/Departamentos_y_municipios_de_Colombia.csv')
       );
     });
   });
+
+app.use(cors());
+app.use(morgan('dev'));
 
 app.get('/:city', (req, res) => {
   switch (req.params.city) {
