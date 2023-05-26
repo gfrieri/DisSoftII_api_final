@@ -7,62 +7,58 @@ import csv from 'csv-parser';
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use(cors());
-app.use(morgan('dev'));
+//app.use(express.json());
 
 const output = [];
 const city_dpt = new Map();
+
 fs.createReadStream('./src/data/DATOSFINAL.csv')
   .pipe(csv())
-  .on('data', (data) => {
-    output.push(data);
-  })
+  .on('data', (data) => output.push(data))
   .on('end', () => {
     output.forEach((row) => {
       city_dpt.set(
         row['MUNICIPIO'],
         row['DEPARTAMENTO']
-          .normalize('NFD')
+        /*.normalize('NFD')
           .replace(/[\u0300-\u036f]/g, '')
-          .toLowerCase()
+          .toLowerCase()*/
       );
     });
   });
 
+app.use(cors());
+app.use(morgan('dev'));
+
 app.get('/city/:city', (req, res) => {
   switch (req.params.city) {
     case 'bogota':
-      res.json({ city: 'bogota', dpt: 'cundinamarca' });
+      res.send('cundinamarca');
       break;
     case 'medellin':
-      res.json({ city: 'medellin', dpt: 'antioquia' });
+      res.send('antioquia');
       break;
     case 'cali':
-      res.json({ city: 'cali', dpt: 'valle del cauca' });
+      res.send('valle del cauca');
       break;
     case 'barranquilla':
-      res.json({ city: 'barranquilla', dpt: 'atlantico' });
+      res.send('atlantico');
       break;
     case 'cartagena':
-      res.json({ city: 'cartagena', dpt: 'bolivar' });
+      res.send('bolivar');
       break;
     case 'bucaramanga':
-      res.json({ city: 'bucaramanga', dpt: 'santander' });
+      res.send('santander');
       break;
     case 'santa marta':
-      res.json({ city: 'santa marta', dpt: 'magdalena' });
+      res.send('magdalena');
       break;
     case 'valledupar':
-      res.json({ city: 'valledupar', dpt: 'cesar' });
+      res.send('cesar');
       break;
     default:
-      const city = req.params.city
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase();
       const dpt = city_dpt.get(city);
-      res.json({ city: city, dpt: dpt });
+      res.send(dpt);
       break;
   }
 });
