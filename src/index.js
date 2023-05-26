@@ -57,7 +57,7 @@ app.get('/:city', (req, res) => {
       res.send('cesar');
       break;
     default:
-      const dpt = city_dpt.get(city);
+      const dpt = city_dpt.get(req.params.city);
       res.send(dpt);
       break;
   }
