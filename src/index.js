@@ -32,29 +32,32 @@ app.use(morgan('dev'));
 
 app.get('/:city', (req, res) => {
   switch (req.params.city) {
-    case 'bogota':
-      res.send('cundinamarca');
+    case 'Bogota':
+      res.send('Cundinamarca');
       break;
-    case 'medellin':
-      res.send('antioquia');
+    case 'Medellin':
+      res.send('Antioquia');
       break;
-    case 'cali':
-      res.send('valle del cauca');
+    case 'Cali':
+      res.send('Valle del cauca');
       break;
-    case 'barranquilla':
-      res.send('atlantico');
+    case 'Barranquilla':
+      res.send('Atlantico');
       break;
-    case 'cartagena':
-      res.send('bolivar');
+    case 'Cartagena':
+      res.send('Bolivar');
       break;
-    case 'bucaramanga':
-      res.send('santander');
+    case 'Bucaramanga':
+      res.send('Santander');
       break;
-    case 'santa marta':
-      res.send('magdalena');
+    case 'Santa marta':
+      res.send('Magdalena');
       break;
-    case 'valledupar':
-      res.send('cesar');
+    case 'Valledupar':
+      res.send('Cesar');
+      break;
+    case 'San Andres':
+      res.send('San Andres y Providencia');
       break;
     default:
       const dpt = city_dpt.get(req.params.city);
