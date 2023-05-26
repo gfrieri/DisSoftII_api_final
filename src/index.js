@@ -12,12 +12,15 @@ app.use(morgan('dev'));
 const output = [];
 const city_dpt = new Map();
 
-fs.createReadStream('./src/data/DATOSFINAL.csv')
+fs.createReadStream('./src/data/Departamentos_y_municipios_de_Colombia.csv')
   .pipe(csv())
   .on('data', (data) => output.push(data))
   .on('end', () => {
     output.forEach((row) => {
-      city_dpt.set(row['MUNICIPIO'], row['DEPARTAMENTO']);
+      city_dpt.set(
+        row['MUNICIPIO'].replace(/[\u0300-\u036f]/g, ''),
+        row['DEPARTAMENTO'].replace(/[\u0300-\u036f]/g, '')
+      );
     });
   });
 
@@ -41,7 +44,7 @@ app.get('/:city', (req, res) => {
     case 'Bucaramanga':
       res.send('Santander');
       break;
-    case 'Santa marta':
+    case 'Santa Marta':
       res.send('Magdalena');
       break;
     case 'Valledupar':
@@ -52,7 +55,7 @@ app.get('/:city', (req, res) => {
       break;
     default:
       const dpt = city_dpt.get(req.params.city);
-      res.send(dpt);
+      res.send(String(dpt));
       break;
   }
 });
