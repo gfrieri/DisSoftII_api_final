@@ -30,7 +30,7 @@ fs.createReadStream('./src/data/DATOSFINAL.csv')
 app.use(cors());
 app.use(morgan('dev'));
 
-app.get('/city/:city', (req, res) => {
+app.get('/:city', (req, res) => {
   switch (req.params.city) {
     case 'bogota':
       res.send('cundinamarca');
