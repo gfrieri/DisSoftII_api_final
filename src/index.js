@@ -6,8 +6,8 @@ import csv from 'csv-parser';
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-//app.use(express.json());
+app.use(cors());
+app.use(morgan('dev'));
 
 const output = [];
 const city_dpt = new Map();
@@ -17,18 +17,9 @@ fs.createReadStream('./src/data/DATOSFINAL.csv')
   .on('data', (data) => output.push(data))
   .on('end', () => {
     output.forEach((row) => {
-      city_dpt.set(
-        row['MUNICIPIO'],
-        row['DEPARTAMENTO']
-        /*.normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .toLowerCase()*/
-      );
+      city_dpt.set(row['MUNICIPIO'], row['DEPARTAMENTO']);
     });
   });
-
-app.use(cors());
-app.use(morgan('dev'));
 
 app.get('/:city', (req, res) => {
   switch (req.params.city) {
